@@ -14,22 +14,13 @@ public class UI_Joystick : MonoBehaviour,IPointerClickHandler,IPointerDownHandle
     Vector2 _startTouchPosition;
     Vector2 _moveDir; //어떤 방향으로 이동해야하는지
 
-    //조이스틱방향에 따른 플레이어 이동 방법1-1
-    PlayerController _player;
-
-    //조이스틱방향에 따른 플레이어 이동 방법2-1 : Managers script 생성해준다 Managers로 ㄱㄱ
-
-
-
     float _joystickRadius;
 
     void Start()
     {
         //조이스틱 벡그라운드의 RectTransform에서 sizeDelta(요소의크기) 그중에서 y는 높이 x는 폭일텐데 원이니까 뭘해도 상관없다
         //거기서 /2 로 반지름을 구해줌.
-        
         _joystickRadius = _background.gameObject.GetComponent<RectTransform>().sizeDelta.y / 2;
-        _player= GameObject.Find("James").GetComponent<PlayerController>(); //방법1-2 제임스를 찾아서 제임스가 들고있는 플레이어 컨트롤러 컴포넌트를 담아준다. //방법1-3은 PlayerController에 있음
     }
 
     void Update()
@@ -44,11 +35,9 @@ public class UI_Joystick : MonoBehaviour,IPointerClickHandler,IPointerDownHandle
 
     public void OnPointerDown(UnityEngine.EventSystems.PointerEventData eventData)
     {
-        //다운을하면 그 위치로 조이스틱이 이동
         _background.transform.position = eventData.position; 
         _handler.transform.position = eventData.position;
 
-        //처음 누른 포지션 기억해두기
         _startTouchPosition = eventData.position;
 
     }
@@ -58,12 +47,7 @@ public class UI_Joystick : MonoBehaviour,IPointerClickHandler,IPointerDownHandle
         _handler.transform.position = _startTouchPosition;
         _moveDir = Vector2.zero;
 
-        /*//방법 1-4
-        _player.MoveDir = _moveDir;*/
-
-        //방법2-2 PlayerConroller에 방법 2-3이있음
-        Managers.MoveDir = _moveDir;
-
+        Managers.Game.MoveDir = _moveDir;
     }
 
     public void OnDrag(UnityEngine.EventSystems.PointerEventData eventData)
@@ -78,11 +62,7 @@ public class UI_Joystick : MonoBehaviour,IPointerClickHandler,IPointerDownHandle
         Vector2 newPosition = _startTouchPosition + _moveDir * moveDistance; //방향과 이동할 거리를 곱하고 + 시작점을 더해주면 = 핸들의 위치를 새로 잡음
         _handler.transform.position = newPosition;
 
-        /*//방법1-4
-        _player.MoveDir = _moveDir;*/
-
-        //방법2-2 PlayerConroller에 방법 2-3이있음
-        Managers.MoveDir = _moveDir;
+        Managers.Game.MoveDir = _moveDir;
 
     }
 }
