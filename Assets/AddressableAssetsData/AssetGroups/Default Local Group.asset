@@ -16,22 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 9a61c44bef3034a4aa6faf1b2a883a95
-  m_SerializeEntries:
-  - m_GUID: 383f9f4241fdb9b4a97298ab49b2c21d
-    m_Address: WheelMonster.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 21628c09302fa1a4d90b0acb8a581a6f
-    m_Address: BasicMonster.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8cade3fd70b0db0408cd7afa46263a53
-    m_Address: James.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 39629ff4f0413294cac42aaf673f55ad, type: 2}
   m_SchemaSet:

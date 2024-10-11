@@ -12,11 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: Prefabs
   m_EditorClassIdentifier: 
-  m_GroupName: Packed Assets
+  m_GroupName: Prefabs
   m_Data:
     m_SerializedData: []
   m_GUID: 4ef67ad43fe51824dbad313a1fbcb50d
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 8cade3fd70b0db0408cd7afa46263a53
+    m_Address: James.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21628c09302fa1a4d90b0acb8a581a6f
+    m_Address: BasicMonster.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 383f9f4241fdb9b4a97298ab49b2c21d
+    m_Address: WheelMonster.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 39629ff4f0413294cac42aaf673f55ad, type: 2}
   m_SchemaSet:
