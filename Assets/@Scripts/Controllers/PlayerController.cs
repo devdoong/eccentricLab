@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
-        Managers.Game.OnMoveDirChanged += HandleOnMoveDirChanged;
+        Managers.Game.OnMoveDirChanged += HandleOnMoveDirChanged; //●4.구독
     }
 
     void OnDestroy()
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void HandleOnMoveDirChanged(Vector2 dir)
+    void HandleOnMoveDirChanged(Vector2 dir) //●5. 구독한 함수를 보면 dir 파라미터에 Invoke(_moveDir)으로 받은 값이 들어갈것
     {
         _moveDir = dir;
     }
@@ -39,23 +39,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //Device Simulator 에선 먹통
-    void UpdateInput()
-    {
-        Vector2 moveDir = Vector2.zero;
 
-        if (Input.GetKey(KeyCode.W))
-            moveDir.y += 1;
-        if (Input.GetKey(KeyCode.S))
-            moveDir.y -= 1;
-        if (Input.GetKey(KeyCode.A))
-            moveDir.x -= 1;
-        if (Input.GetKey(KeyCode.D))
-            moveDir.x += 1;
-
-        _moveDir = moveDir.normalized;
-
-    }
 
     void MovePlayer()
     {

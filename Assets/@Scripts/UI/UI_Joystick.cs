@@ -57,12 +57,14 @@ public class UI_Joystick : MonoBehaviour,IPointerClickHandler,IPointerDownHandle
         float moveDistance = Mathf.Min(touchDir.magnitude, _joystickRadius); //magnitude=벡터를 거리로 구해줌.//그래서 background의 지름?이랑 이 거리중에서 더 작은거 골라주는거 
 
         //이 벡터를 normalized하면 크기가 1로 바뀌고 방향만 유지됩니다. 즉, (3, 4)의 단위 벡터는(0.6, 0.8)로 변환됩니다. 이 벡터는 크기는 1이지만, 여전히 같은 방향을 가리키고 있습니다.
-        _moveDir = touchDir.normalized; //핸들이 이동할 방향.
+        _moveDir = touchDir.normalized; //핸들이 이동할 방향.겸 이 방향을 플레이어에게도 적용해줄 예정임.
 
         Vector2 newPosition = _startTouchPosition + _moveDir * moveDistance; //방향과 이동할 거리를 곱하고 + 시작점을 더해주면 = 핸들의 위치를 새로 잡음
         _handler.transform.position = newPosition;
 
-        Managers.Game.MoveDir = _moveDir;
+
+
+        Managers.Game.MoveDir = _moveDir; //●1. GameManger의 MoveDir 프로퍼티에 value로 _moveDir를 전달한다. [goto GameManager]
 
     }
 }
