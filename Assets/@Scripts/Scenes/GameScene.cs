@@ -5,13 +5,6 @@ using UnityEngine;
 public class GameScene : MonoBehaviour
 {
     
-
-    // Start is called before the first frame update
-
-    private GameObject _basicMonster;
-    private GameObject _wheelMonster;
-    private GameObject _jamesPlayer;
-    private GameObject _joyStick;
     void Start()
     {
         Managers.Resource.LoadAllAsync<GameObject>("Prefabs", (key, count, total) =>
@@ -20,33 +13,49 @@ public class GameScene : MonoBehaviour
 
             if (count == total)
             {
-                StartLoaded();
+                StartLoaded2();
             }
         });
     }
     void StartLoaded()
     {
-        GameObject Player = Managers.Resource.Load<GameObject>("James.prefab");
+        var james_player = Managers.Resource.Instantiate("James.prefab");
+        james_player.AddComponent<PlayerController>();
 
 
-        GameObject go = new GameObject() { name = "@Monsters" }; //@Monsters라는 빈오브젝트를 하이러키에 하나 생성
-        //Monsters에다가 앞으로 풀링하여 등장시킬 몬스터들을 넣으려는데
-        //계층구조를 가지고 있는 컴포넌트는 transform이다
-        _basicMonster.transform.parent = go.transform;
-        //_wheelMonster.transform.parent = go.transform;
-        _jamesPlayer.transform.parent = go.transform;
-        //이렇게 @Monsters를 부모로 삼아준다.
+        var basic_mon = Managers.Resource.Instantiate("BasicMonster.prefab");
+        var wheel_mon = Managers.Resource.Instantiate("WheelMonster.prefab");
+        var joystick = Managers.Resource.Instantiate("UI_Joystick.prefab");
+        //joystick.name = "@UI_Joystick";
 
-        //실행했을때 (Clone) 이 붙는게 마음에 안든다면
-        //_jamesPlayer.name = _jamesPlayerPrefab.name;
-        //_basicMonster.name = _basicMobPrefab.name;
-        //_wheelMonster.name = _wheelMobPrefab.name;
-        //이렇게 프리팹의 이름을 가져오면 된다
-        _joyStick.name = "@UI_Joystick";
+        //var map = Managers.Resource.Instantiate("Map.prefab");
+        //map.name = "@Map";
+        Camera.main.GetComponent<CameraController>().Target = james_player;
+    }
+    
+    void StartLoaded2()
+    {
+        var james_player = Managers.Object.Spawn<PlayerController>();
+        //var james_player = Managers.Resource.Instantiate("James.prefab");
+        //james_player.AddComponent<PlayerController>(); //위에껄로 대체 cuz of objectManager
 
-        _jamesPlayer.AddComponent<PlayerController>();
+        for (int i = 0; i < 10; ++i)
+        {
+            MonsterController mc1 = Managers.Object.Spawn<MonsterController>(Random.Range(0, 2));
+            mc1.transform.position = new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
+            MonsterController mc2 = Managers.Object.Spawn<MonsterController>(Random.Range(0, 2));
+            mc2.transform.position = new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
 
-        Camera.main.GetComponent<CameraController>().Target = _jamesPlayer;
+        }
+        MonsterController mc = Managers.Object.Spawn<MonsterController>(Random.Range(0, 2));
+        mc.transform.position = new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
+
+        var joystick = Managers.Resource.Instantiate("UI_Joystick.prefab");
+        joystick.name = "@UI_Joystick";
+
+        //var map = Managers.Resource.Instantiate("Map.prefab");
+        //map.name = "@Map";
+        Camera.main.GetComponent<CameraController>().Target = james_player.gameObject;
     }
     // Update is called once per frame
     void Update()
@@ -54,12 +63,4 @@ public class GameScene : MonoBehaviour
         
     }
 
-  
-
-    //어찌저찌 마무리를 쳐두고
-    //gpt api 도우미 npc =>
-    //도우미 내가 지금 좀 약해서 보스를 못잡는것같아. <- 나의 레벨, 아이템상황 -> 어 당신은 지금 이스테이지의 보스를 잡기에는 레벨이 부족합니다.
-    // 내가 지금 좀 약해서 보스를 못잡는것같아.
-    // ai <- 스테이지1에서는 3레벨과 아이템은 전부다 레어등급이 갖춰져야해. 이걸 활용해서 유저ㅗ가 질문하면 답변해줘.
-    //+여기저기 널린기능. 
 }

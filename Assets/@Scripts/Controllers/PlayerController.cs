@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : CreatureController
 {
 
     Vector2 _moveDir = Vector2.zero;
@@ -48,4 +48,16 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = _moveDir * _speed * Time.deltaTime;
         transform.position += dir;
     }
+
+    public override void OnDamaged(BaseController attacker, int damage)
+    {
+        base.OnDamaged(attacker, damage);
+
+        Debug.Log($"체력 : {HP} / {MaxHP}");
+
+        //TEMP
+        CreatureController cc = attacker as CreatureController; //attacker를 크리쳐로 형변환 해주지만 그게 실패하면 null로 반환함
+        cc?.OnDamaged(this, 10000); //가시
+    }
+
 }
