@@ -17,27 +17,14 @@ public class GameScene : MonoBehaviour
             }
         });
     }
-    void StartLoaded()
-    {
-        var james_player = Managers.Resource.Instantiate("James.prefab");
-        james_player.AddComponent<PlayerController>();
 
-
-        var basic_mon = Managers.Resource.Instantiate("BasicMonster.prefab");
-        var wheel_mon = Managers.Resource.Instantiate("WheelMonster.prefab");
-        var joystick = Managers.Resource.Instantiate("UI_Joystick.prefab");
-        //joystick.name = "@UI_Joystick";
-
-        //var map = Managers.Resource.Instantiate("Map.prefab");
-        //map.name = "@Map";
-        Camera.main.GetComponent<CameraController>().Target = james_player;
-    }
-    
+    SpawningPool spawning_pool;
     void StartLoaded2()
     {
+
+        spawning_pool = gameObject.AddComponent<SpawningPool>();
+         
         var james_player = Managers.Object.Spawn<PlayerController>();
-        //var james_player = Managers.Resource.Instantiate("James.prefab");
-        //james_player.AddComponent<PlayerController>(); //위에껄로 대체 cuz of objectManager
 
         for (int i = 0; i < 10; ++i)
         {

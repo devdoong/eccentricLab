@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ObjectManager
+public class ObjectManager //Spawn과 DeSpawn을 관리해주는 매니저
 {
     public PlayerController Player { get; private set; }
     public HashSet<MonsterController> Monsters { get; } = new HashSet<MonsterController>();
@@ -12,12 +12,12 @@ public class ObjectManager
 
     public T Spawn<T>(int templateID = 0) where T : BaseController
     {
-        System.Type type = typeof(T);
+        System.Type type = typeof(T); //타입 넣어주기
 
-        if (type == typeof(PlayerController))
+        if (type == typeof(PlayerController)) //타입 비교 => 플레이어
         {
             // TODO : Data
-            GameObject go = Managers.Resource.Instantiate("James.prefab", pooling: true);
+            GameObject go = Managers.Resource.Instantiate("James.prefab", pooling: true); //생성
             go.name = "Player";
 
             PlayerController pc = go.GetOrAddComponent<PlayerController>();
