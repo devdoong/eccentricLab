@@ -11,30 +11,29 @@ public class ResourceManager
 {
     public T Load<T>(string key) where T : Object
     {
-        if (_resources.TryGetValue(key, out Object resource)) //해당키값의 오브젝트가 있으면 True를 반환
-            return resource as T; //타입의 리소스를 리턴
+        if (_resources.TryGetValue(key, out Object resource)) //어드레서블 딕셔너리에 키값이 존재하면 오브젝트를 가져오겠다
+            return resource as T; //가져온 오브젝트를 리턴
 
         return null;
     }
 
-    public GameObject Instantiate(string key, Transform parent = null, bool pooling = false) //Manager.Resource.Instantiate
+    public GameObject Instantiate(string key, Transform parent = null, bool pooling = false) //키값을 가지고
     {
-        GameObject prefab = Load<GameObject>($"{key}"); //로드함수에 타입과 key값전달
-        if (prefab == null)
+        GameObject prefab = Load<GameObject>($"{key}"); //어드레서블을 통해 로딩된 오브젝트들의 딕셔너리중 키값을 가지고 오브젝트를 가져옴
+        if (prefab == null) 
         {
             Debug.Log($"Failed to load prefab : {key}");
             return null;
-        }
+        }//깡통이면 예외처리
 
-        //pool
-        if(pooling)
+        if (pooling)
         {
             return Managers.Pool.Pop(prefab);
         }
 
-        GameObject go = Object.Instantiate(prefab, parent);
-        go.name = prefab.name;
-        return go;
+        GameObject go = Object.Instantiate(prefab, parent); //일단 하이러키부모는 안정해주고 go에 담아서 하이러키에 생성하겠음.
+        //go.name = prefab.name; //이름도 지어주겠음 오브젝트매니저로 토스
+        return go; //오브젝트 리턴
     }
 
     public void Destroy(GameObject go)

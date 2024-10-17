@@ -13,18 +13,17 @@ public class GameScene : MonoBehaviour
 
             if (count == total)
             {
-                StartLoaded2();
+                StartLoaded();
             }
         });
     }
 
     SpawningPool spawning_pool;
-    void StartLoaded2()
+    void StartLoaded()
     {
-
         spawning_pool = gameObject.AddComponent<SpawningPool>();
          
-        var james_player = Managers.Object.Spawn<PlayerController>();
+        var james_player = Managers.Object.Spawn<PlayerController>(); 
 
         for (int i = 0; i < 10; ++i)
         {
