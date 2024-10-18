@@ -28,42 +28,7 @@ public class MonsterController : CreatureController
         GetComponent<SpriteRenderer>().flipX = dir.x < 0; //왼쪽을보냐 마냐. 뒤집어주기
         #endregion
     }
-
-    Coroutine _coDotDamage;
-
-    private void OnCollisionEnter2D(Collision2D collision) //몬스터가 충돌이 발생했는데
-    {
-        PlayerController target = collision.gameObject.GetComponent<PlayerController>(); //부딪힌 대상이 플레이어이길 바라며 PlayerController를 불러와봤는데
-        if (target == null) return;
-
-        //들고와진다면 + 
-        if(_coDotDamage != null) StopCoroutine(_coDotDamage); //해당 코루틴 정지
-
-        _coDotDamage = StartCoroutine(CostartDotDamage(target));
-    }
-
-    public void OnCollisionExit2D(Collision2D collision)
-    {
-        PlayerController target = collision.gameObject.GetComponent<PlayerController>();
-        if (target == null) return;
-
-        if(_coDotDamage != null) StopCoroutine(_coDotDamage);
-
-        _coDotDamage = null;
-    }
-
-
-    public IEnumerator CostartDotDamage(PlayerController target)
-    {
-        while (true)
-        {
-            target.OnDamaged(this, 2);
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-
-
-
+    #region override OnDead()
     protected override void OnDead()
     {
         base.OnDead();
@@ -73,4 +38,49 @@ public class MonsterController : CreatureController
 
         Managers.Object.Despawn(this);
     }
+    #endregion
+
+    #region 몬스터 충돌발생 로직 
+    private void OnCollisionEnter2D(Collision2D collision) //몬스터가 충돌이 발생했는데
+    {
+        PlayerController target = collision.gameObject.GetComponent<PlayerController>(); //부딪힌 대상이 플레이어이길 바라며 PlayerController를 불러와봤는데
+        if (target == null) return; //아니라면 됐고
+
+
+        if (_coDotDamage != null) StopCoroutine(_coDotDamage); //이미 실행중인 코루틴이 있으면 도트데미지가 두배로 들어갈 순 없으니 중복제거
+
+        _coDotDamage = StartCoroutine(CostartDotDamage(target)); //해당함수를 코루틴실행
+
+        //부활시 일정시간 무적을 원한다면 여기를 수정
+    }
+    #endregion
+    #region 몬스터 충돌탈출 로직
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        PlayerController target = collision.gameObject.GetComponent<PlayerController>();
+        if (target == null) return;
+
+        if (_coDotDamage != null) StopCoroutine(_coDotDamage);
+
+        _coDotDamage = null;
+    }
+    #endregion
+    #region 플레이어 충돌 데미지 파트 (코루틴)
+    Coroutine _coDotDamage;
+    public IEnumerator CostartDotDamage(PlayerController target) 
+    {
+        while (true)
+        {
+            target.OnDamaged(this, 2);
+            yield return new WaitForSeconds(0.1f); //0.1초마다 실행되게 해줌
+        }
+    }
+    #endregion
+
+    
+
+
+
+    
+
 }

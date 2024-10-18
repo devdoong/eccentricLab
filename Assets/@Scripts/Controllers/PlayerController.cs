@@ -6,7 +6,11 @@ public class PlayerController : CreatureController
 {
 
     Vector2 _moveDir = Vector2.zero;
-    float _speed = 5.0f;
+    
+    private PlayerController()
+    {
+        _speed = 3.0f;
+    }
 
     public Vector2 MoveDir
     {

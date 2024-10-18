@@ -9,8 +9,19 @@ using UnityEngine.UIElements;
 class Pool
 {
     GameObject _prefab; //원본 프리팹 담아줌
-    IObjectPool<GameObject> _pool; //unity pooling interface
+    IObjectPool<GameObject> _pool; //풀장
 
+    #region 생성자
+    public Pool(GameObject prefab) //풀링해줄테니 일단 오브젝트부터 내놔라.
+    {
+        _prefab = prefab; //오브젝트에 넣어주고
+
+        //풀장 생성 : 4개의 생성,온,오프,삭제
+        _pool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy); //최소한 create해주는 func는 만들어야함
+
+    }
+    #endregion
+    #region 하이러키 풀 부모 그룹 생성
     Transform _root; //찐 root //하이러키에 형체가 보여질 _root
     Transform Root //get할 Root
     {
@@ -26,13 +37,8 @@ class Pool
             return _root;
         }
     }
-
-    public Pool(GameObject prefab) //풀링해줄테니 일단 오브젝트부터 내놔라.
-    {
-        _prefab = prefab; //오브젝트에 넣어주고
-        _pool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy); //최소한 create해주는 func는 만들어야함
-        
-    }
+    #endregion
+    #region func
     GameObject OnCreate() //원본 찍어냄
     {
         GameObject go = GameObject.Instantiate(_prefab);
@@ -53,6 +59,8 @@ class Pool
         Managers.Resource.Destroy(go);
         //GameObject.Destroy(go);
     }
+    #endregion
+    #region pushpop
     public void Push(GameObject go)
     {
         _pool.Release(go); 
@@ -61,16 +69,23 @@ class Pool
     {
         return _pool.Get();
     }
-}
+} //저수지
+#endregion
 public class PoolManager 
 {
     Dictionary<string, Pool> _pools = new Dictionary<string, Pool>(); //키밸류 pools
-    
+
+
+    void CreatePool(GameObject prefab)
+    {
+        Pool pool = new Pool(prefab);//풀장에 프리팹 넣어줌 생성자를 살펴봐야함 //알아서 OnCreate된다.
+        _pools.Add(prefab.name, pool);  //각 풀 관리 딕셔너리에 prefab.name을 키값으로 하여 GameObject를 추가
+    }
     public GameObject Pop(GameObject prefab)
     {
         if (_pools.ContainsKey(prefab.name) == false) //키값 아예 없으면
             CreatePool(prefab);//
-        return _pools[prefab.name].Pop();
+        return _pools[prefab.name].Pop(); //prefab.name키의 GameObject를 리턴
     }
 
     public bool Push(GameObject go)
@@ -82,9 +97,10 @@ public class PoolManager
         return true;
     }
 
-    void CreatePool(GameObject prefab)
-    {
-        Pool pool = new Pool(prefab);//풀객체에 프리팹 넣어줌 생성자를 살펴봐야함 //알아서 OnCreate된다.
-        _pools.Add(prefab.name, pool);  //딕셔너리에 Add
-    }
+    
+
+
+    //PoolManager 에서 CreatPool : 프리팹을 넘겨주고 풀에 넣어주고 여러 종류의 풀을 보관하는 딕셔너리에 넣어줌
+    //class pool 은 basicmonster만 모아주는 pool, wheelmonster만 모아주는 pool이 될것이고
+    //poolManager는 그 풀들을 모아서 관리하는 역할
 }

@@ -26,10 +26,10 @@ public class SpawningPool : MonoBehaviour
 
     void TrySpawn()
     {
-        int monsterCount = Managers.Object.Monsters.Count;
+        int monsterCount = Managers.Object.Monsters.Count; //현재 찍어준 몬스터
         if(monsterCount >= _maxMonsterCount )
         {
-            return;
+            return; //100마리 이상이면
         }
 
 

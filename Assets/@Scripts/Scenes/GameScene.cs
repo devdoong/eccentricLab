@@ -21,20 +21,10 @@ public class GameScene : MonoBehaviour
     SpawningPool spawning_pool;
     void StartLoaded()
     {
-        spawning_pool = gameObject.AddComponent<SpawningPool>();
          
-        var james_player = Managers.Object.Spawn<PlayerController>(); 
+        var james_player = Managers.Object.Spawn<PlayerController>(); //PlayerController 리턴
 
-        for (int i = 0; i < 10; ++i)
-        {
-            MonsterController mc1 = Managers.Object.Spawn<MonsterController>(Random.Range(0, 2));
-            mc1.transform.position = new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
-            MonsterController mc2 = Managers.Object.Spawn<MonsterController>(Random.Range(0, 2));
-            mc2.transform.position = new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
-
-        }
-        MonsterController mc = Managers.Object.Spawn<MonsterController>(Random.Range(0, 2));
-        mc.transform.position = new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
+        spawning_pool = gameObject.AddComponent<SpawningPool>();//Start함수 실행되면서 스포닝 시작
 
         var joystick = Managers.Resource.Instantiate("UI_Joystick.prefab");
         joystick.name = "@UI_Joystick";

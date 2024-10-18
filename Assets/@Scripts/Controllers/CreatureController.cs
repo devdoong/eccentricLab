@@ -4,20 +4,12 @@ using UnityEngine;
 
 public class CreatureController : BaseController
 {
+    [SerializeField]
     protected float _speed = 1.0f;
 
     public int HP { get; set; } = 100;
     public int MaxHP { get; set; } = 100;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public virtual void OnDamaged(BaseController attacker,int damage)
     {
@@ -28,10 +20,6 @@ public class CreatureController : BaseController
             HP = 0;
             OnDead();
         }
-
-        Debug.Log($"몬스터 체력 : {HP} / {MaxHP}");
-
-
 
         return;
     }
