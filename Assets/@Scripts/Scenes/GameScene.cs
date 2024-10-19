@@ -13,7 +13,13 @@ public class GameScene : MonoBehaviour
 
             if (count == total)
             {
-                StartLoaded();
+                Managers.Resource.LoadAllAsync<TextAsset>("Data", (key3, count3, total3) =>
+                {
+                    if (count3 == total3)
+                    {
+                        StartLoaded();
+                    }
+                });
             }
         });
     }
@@ -32,6 +38,13 @@ public class GameScene : MonoBehaviour
         //var map = Managers.Resource.Instantiate("Map.prefab");
         //map.name = "@Map";
         Camera.main.GetComponent<CameraController>().Target = james_player.gameObject;
+
+        //Data Test
+        Managers.Data.Init();
+        foreach(var playerData in Managers.Data.PlayerDic.Values)
+        {
+            Debug.Log($"Level : {playerData.level}, HP : {playerData.maxHp}");
+        }
     }
     // Update is called once per frame
     void Update()
