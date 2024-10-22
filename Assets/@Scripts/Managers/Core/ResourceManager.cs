@@ -6,6 +6,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System;
 using Object = UnityEngine.Object;
+using Unity.VisualScripting.FullSerializer;
 
 public class ResourceManager
 {
@@ -65,16 +66,34 @@ public class ResourceManager
 
         string loadKey = key; //잼 어드레서블에는 텍스처 부모 아래에 스프라이트를 들고있는데 텍스처는 필요없고 스프라이트만 있으면되는데 걔를 불러오려면
         if (key.Contains(".sprite")) //.sprite를 포함한 키값이라면
+        {
             loadKey = $"{key}[{key.Replace(".sprite", "")}]"; //그 아래에있는 이름으로 바꾸겠다.
+        }
 
 
-        var asyncOperation=Addressables.LoadAssetAsync<T>(key); //비동기방식. 가져왔을때 콜백함수를 받아 처리함
+
+        var asyncOperation=Addressables.LoadAssetAsync<T>(loadKey); //비동기방식. 가져왔을때 콜백함수를 받아 처리함
         asyncOperation.Completed += (op) => //비동기로 내가 찾는 어떠한 리소스를 가져왔다면 람다를 실행
         {
-            _resources.Add(key, op.Result); //딕셔너리에 키값과 결과를 보관
-            callback?.Invoke(op.Result); //LoadAsync를 부른놈한테 op.Result를 전달
-            //즉 보관도 보관하고 전달도 하고
-            
+
+            if (op.Result is Texture2D texture)
+            {
+                // Texture2D를 Sprite로 변환합니다.
+                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+                // 리소스에 스프라이트를 추가하고 콜백을 호출합니다.
+                _resources.Add(key, sprite);//딕셔너리에 키값과 결과를 보관
+                callback.Invoke(sprite as T);//LoadAsync를 부른놈한테 op.Result를 전달
+                return;
+            }
+
+            // 일반적인 경우 리소스를 그대로 사용합니다.
+            _resources.Add(key, op.Result);//딕셔너리에 키값과 결과를 보관
+            callback.Invoke(op.Result);//LoadAsync를 부른놈한테 op.Result를 전달
+
+            //즉 보관도 보관하고 전달도 하고*/
+
+
         };
     }
 

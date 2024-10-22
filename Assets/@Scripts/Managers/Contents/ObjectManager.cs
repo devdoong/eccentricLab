@@ -25,6 +25,7 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
 
             PlayerController pc = go.GetOrAddComponent<PlayerController>(); //������ �÷��̾�� ������Ʈ ������ Get�ϴ�����???
             Player = pc; //����ص�
+            pc.Init();
 
             return pc as T;
         }
@@ -39,6 +40,7 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
 
             MonsterController mc = go.GetOrAddComponent<MonsterController>(); //������Ʈ ������ Get�ϴ����� ???
             Monsters.Add(mc); //�ؽ��� �о�־���
+            mc.Init();
 
             return mc as T;
         }
@@ -50,7 +52,12 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
 
             GemController gc = go.GetOrAddComponent<GemController>();
             Gems.Add(gc);
-            
+            gc.Init();
+
+            //Gem색상 정해주기
+            string key = UnityEngine.Random.Range(0, 2) == 0 ? "Gem1.sprite" : "Gem2.sprite"; //랜덤값 하나 뽑아서
+            Sprite sprite = Managers.Resource.Load<Sprite>(key); //로드
+            go.GetComponent<SpriteRenderer>().sprite = sprite; //넣기
 
             return gc as T; 
         }
