@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: 'Data '
   m_EditorClassIdentifier: 
-  m_GroupName: Data
+  m_GroupName: 'Data '
   m_Data:
     m_SerializedData: []
   m_GUID: 6377e9efce796b3499037af2a3d7602f
@@ -20,12 +20,14 @@ MonoBehaviour:
   - m_GUID: 80a860420f960184aba32f24d88c2ff0
     m_Address: PlayerData.xml
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 391b3bd06b3ac2749b8efa931ec13580
     m_Address: MonsterData.xml
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 39629ff4f0413294cac42aaf673f55ad, type: 2}
