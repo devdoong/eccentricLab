@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : CreatureController
 {
 
     Vector2 _moveDir = Vector2.zero;
+
+    float EnvCollectDist { get; set; } = 1.0f;
     
     private PlayerController()
     {
@@ -40,6 +43,7 @@ public class PlayerController : CreatureController
     void Update()
     {
         MovePlayer();
+        CollectEnv();
 
     }
 
@@ -51,6 +55,25 @@ public class PlayerController : CreatureController
 
         Vector3 dir = _moveDir * _speed * Time.deltaTime;
         transform.position += dir;
+    }
+
+    void CollectEnv()
+    {
+        float sqrCollectDist = EnvCollectDist * EnvCollectDist; //Á¦°ö
+
+        List<GemController> gems = Managers.Object.Gems.ToList();
+        foreach (GemController gem in gems)
+        {
+            Vector3 dir = gem.transform.position - transform.position;
+            if (dir.sqrMagnitude <= EnvCollectDist)
+            {
+                Managers.Game.Gem += 1;
+                Managers.Object.Despawn(gem);
+            }
+        }
+
+        var findGems = GameObject.Find("@Grid").GetComponent<GridController>().GatherObjects(transform.position, EnvCollectDist + 0.5f);
+        Debug.Log($"SearchGems({findGems.Count}) TotalGems({gems.Count})");
     }
 
     public override void OnDamaged(BaseController attacker, int damage)

@@ -59,6 +59,9 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
             Sprite sprite = Managers.Resource.Load<Sprite>(key); //로드
             go.GetComponent<SpriteRenderer>().sprite = sprite; //넣기
 
+            //TEMP
+            GameObject.Find("@Grid").GetComponent<GridController>().Add(go);
+
             return gc as T; 
         }
         #endregion
@@ -87,6 +90,9 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
         {
             Gems.Remove(obj as GemController);
             Managers.Resource.Destroy(obj.gameObject);
+
+            //TEMP
+            GameObject.Find("@Grid").GetComponent<GridController>().Remove(obj.gameObject);
         }
     }
 }
