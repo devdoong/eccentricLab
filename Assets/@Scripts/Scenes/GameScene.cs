@@ -1,3 +1,4 @@
+// Created on: 2024-10-23
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,19 +8,14 @@ public class GameScene : MonoBehaviour
     
     void Start()
     {
-        Managers.Resource.LoadAllAsync<GameObject>("Prefabs", (key, count, total) =>
+        Managers.Resource.LoadAllAsync<Object>("PreLoad", (key, count, total) =>
         {
             Debug.Log($"{key}: {count}/{total}");
 
             if (count == total)
             {
-                Managers.Resource.LoadAllAsync<TextAsset>("Data", (key3, count3, total3) =>
-                {
-                    if (count3 == total3)
-                    {
-                        StartLoaded();
-                    }
-                });
+                StartLoaded();
+
             }
         });
     }
@@ -28,9 +24,9 @@ public class GameScene : MonoBehaviour
     void StartLoaded()
     {
          
-        var james_player = Managers.Object.Spawn<PlayerController>(); //PlayerController ¸®ÅÏ
+        var james_player = Managers.Object.Spawn<PlayerController>(Vector3.zero); //PlayerController ï¿½ï¿½ï¿½ï¿½
 
-        spawning_pool = gameObject.AddComponent<SpawningPool>();//StartÇÔ¼ö ½ÇÇàµÇ¸é¼­ ½ºÆ÷´× ½ÃÀÛ
+        spawning_pool = gameObject.AddComponent<SpawningPool>();//Startï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¸é¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         var joystick = Managers.Resource.Instantiate("UI_Joystick.prefab");
         joystick.name = "@UI_Joystick";

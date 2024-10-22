@@ -1,18 +1,19 @@
+// Created on: 2024-10-23
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawningPool : MonoBehaviour
 {
-    //¸®½ºÆù ÁÖ±â
-    //¸ó½ºÅÍ ÃÖ´ë °³¼ö
-    //½ºÅé
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½
+    //ï¿½ï¿½ï¿½ï¿½
     float _spawnInterval = 0.2f;
     int _maxMonsterCount = 100;
     Coroutine _coUpdateSpawningPool;
     void Start() 
     {
-        _coUpdateSpawningPool = StartCoroutine(CoUpdateSpawningPool()); //ÄÚ·çÆ¾ ½ÃÀÛ
+        _coUpdateSpawningPool = StartCoroutine(CoUpdateSpawningPool()); //ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½
     }
 
     IEnumerator CoUpdateSpawningPool()
@@ -20,22 +21,22 @@ public class SpawningPool : MonoBehaviour
         while(true)
         {
             TrySpawn();
-            yield return new WaitForSeconds(_spawnInterval); //2.0ÃÊ¸¶´Ù
+            yield return new WaitForSeconds(_spawnInterval); //2.0ï¿½Ê¸ï¿½ï¿½ï¿½
         }
     }
 
     void TrySpawn()
     {
-        int monsterCount = Managers.Object.Monsters.Count; //ÇöÀç Âï¾îÁØ ¸ó½ºÅÍ
+        int monsterCount = Managers.Object.Monsters.Count; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if(monsterCount >= _maxMonsterCount )
         {
-            return; //100¸¶¸® ÀÌ»óÀÌ¸é
+            return; //100ï¿½ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½Ì¸ï¿½
         }
 
 
         //TEMP : DATA ID
-        MonsterController mc = Managers.Object.Spawn<MonsterController>(Random.Range(0,2));
-        mc.transform.position = new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
+        Vector3 randPos = new Vector2 (Random.Range(-5,5), Random.Range(-5,5));
+        MonsterController mc = Managers.Object.Spawn<MonsterController>(randPos,Random.Range(0,2));
     }
 
     // Update is called once per frame

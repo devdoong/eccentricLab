@@ -63,6 +63,10 @@ public class ResourceManager
             return;
         }
 
+        string loadKey = key; //잼 어드레서블에는 텍스처 부모 아래에 스프라이트를 들고있는데 텍스처는 필요없고 스프라이트만 있으면되는데 걔를 불러오려면
+        if (key.Contains(".sprite")) //.sprite를 포함한 키값이라면
+            loadKey = $"{key}[{key.Replace(".sprite", "")}]"; //그 아래에있는 이름으로 바꾸겠다.
+
 
         var asyncOperation=Addressables.LoadAssetAsync<T>(key); //비동기방식. 가져왔을때 콜백함수를 받아 처리함
         asyncOperation.Completed += (op) => //비동기로 내가 찾는 어떠한 리소스를 가져왔다면 람다를 실행

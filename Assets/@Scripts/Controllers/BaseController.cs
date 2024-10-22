@@ -1,3 +1,4 @@
+// Created on: 2024-10-22
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SearchService;
@@ -16,16 +17,24 @@ public class BaseController : MonoBehaviour
     }
 
 
-    //자식들이 override하여 초기화 작업을 하였는지를 확인해 줄 수 있음. //ui작업때 유용할 수 있음.
     bool _init = false;
-
     virtual public bool Init()
     {
         if (_init)
-            return false; //이미 초기화 했다면 false 리턴
+            return false; 
 
         _init = true;
         return true; 
     }
     //
+
+    void Update()
+    {
+        UpdateController();
+    }
+
+    public virtual void UpdateController()
+    {
+
+    }
 }

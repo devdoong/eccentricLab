@@ -10,30 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: 'Data '
+  m_Name: Sprites
   m_EditorClassIdentifier: 
-  m_GroupName: 'Data '
+  m_GroupName: Sprites
   m_Data:
     m_SerializedData: []
-  m_GUID: 6377e9efce796b3499037af2a3d7602f
+  m_GUID: 9fd9034a1c4bfcb49a63e72f833fcc0c
   m_SerializeEntries:
-  - m_GUID: 80a860420f960184aba32f24d88c2ff0
-    m_Address: PlayerData.xml
+  - m_GUID: 690eda6cc47c2104fa79648e622f35ad
+    m_Address: Gem3.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Data
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 391b3bd06b3ac2749b8efa931ec13580
-    m_Address: MonsterData.xml
+  - m_GUID: 5a848155335e1204fbe4d04b433b0a86
+    m_Address: Gem2.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Data
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 861a22b271a47e745aeb059a81c6ee5a
+    m_Address: Gem1.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 39629ff4f0413294cac42aaf673f55ad, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: a2bac0bbdcd91b24396603413b0bfddc, type: 2}
-    - {fileID: 11400000, guid: e7acb239f086a3a4d80c5d988dc7528a, type: 2}
+    - {fileID: 11400000, guid: 4f81cb06628b0de4e8fedebd18a497c2, type: 2}
+    - {fileID: 11400000, guid: 0bd9ce623560f72439051529e55fbd83, type: 2}
