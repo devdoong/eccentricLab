@@ -55,6 +55,18 @@ public class PlayerController : CreatureController
 
         Vector3 dir = _moveDir * _speed * Time.deltaTime;
         transform.position += dir;
+        Debug.Log(dir);
+        if (dir.x < 0) GetComponent<SpriteRenderer>().flipX = true;
+        else if (dir.x > 0) GetComponent<SpriteRenderer>().flipX = false;
+        
+        /*if (dir.x < 0)
+        {
+            flipX = true;  // 왼쪽으로 이동 시 스프라이트를 플립
+        }
+        else if (dir.x > 0)
+        {
+            _spriteRenderer.flipX = false; // 오른쪽으로 이동 시 원래 방향
+        }*/
     }
 
     void CollectEnv()
