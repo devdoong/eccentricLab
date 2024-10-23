@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : CreatureController
 {
@@ -9,11 +10,8 @@ public class PlayerController : CreatureController
     Vector2 _moveDir = Vector2.zero;
 
     float EnvCollectDist { get; set; } = 1.0f;
+
     
-    private PlayerController()
-    {
-        _speed = 3.0f;
-    }
 
     public Vector2 MoveDir
     {
@@ -21,10 +19,17 @@ public class PlayerController : CreatureController
         set { _moveDir = value.normalized; }
     }
 
-    
-    void Start()
+    public override bool Init()
     {
+        if (base.Init() == false)
+            return false;
+
+        _speed = 4.0f;
         Managers.Game.OnMoveDirChanged += HandleOnMoveDirChanged; //●4.구독
+
+        StartProjectile(); //시작하면 코루틴 호출하면서 무한 뺑뱅 돌면서 총알을 쏴줄것이다.
+
+        return true;
     }
 
     void OnDestroy()
@@ -46,8 +51,6 @@ public class PlayerController : CreatureController
         CollectEnv();
 
     }
-
-
 
     void MovePlayer()
     {
@@ -99,4 +102,28 @@ public class PlayerController : CreatureController
         cc?.OnDamaged(this, 10000); //가시
     }
 
+    #region FireBullet
+    Coroutine _coFireBullet;
+
+    void StartProjectile()
+    {
+        if( _coFireBullet != null )
+            StopCoroutine(_coFireBullet);
+
+        _coFireBullet = StartCoroutine(CoStartProjectile());
+    }
+
+    IEnumerator CoStartProjectile()
+    {
+        WaitForSeconds wait = new WaitForSeconds(0.5f); 
+
+        while (true)
+        {
+            ProjectileController pc = Managers.Object.Spawn<ProjectileController>(transform.position,1);
+            pc.SetInfo(1, this, _moveDir);
+
+            yield return wait;
+        }
+    }
+    #endregion
 }

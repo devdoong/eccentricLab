@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SkillDatas>
-	<SkillDatas templateID ="1" name ="총알" type= "projectile" prefabs="BulletProjectile.prefab" damage="2" speed ="2">
-	</SkillDatas>
+	<SkillData templateID ="1" name ="총알" type= "Projectile" prefabs="Bullet.prefab" damage="2" speed ="2">
+	</SkillData>
 </SkillDatas>

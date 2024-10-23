@@ -23,20 +23,22 @@ public class GameScene : MonoBehaviour
     SpawningPool spawning_pool;
     void StartLoaded()
     {
-         
-        var james_player = Managers.Object.Spawn<PlayerController>(Vector3.zero); //PlayerController ����
+        Managers.Data.Init();
 
         spawning_pool = gameObject.AddComponent<SpawningPool>();//Start�Լ� ����Ǹ鼭 ������ ����
+
+        var james_player = Managers.Object.Spawn<PlayerController>(Vector3.zero); //PlayerController ����
+
 
         var joystick = Managers.Resource.Instantiate("UI_Joystick.prefab");
         joystick.name = "@UI_Joystick";
 
         //var map = Managers.Resource.Instantiate("Map.prefab");
         //map.name = "@Map";
+
         Camera.main.GetComponent<CameraController>().Target = james_player.gameObject;
 
         //Data Test
-        Managers.Data.Init();
         foreach(var playerData in Managers.Data.PlayerDic.Values)
         {
             Debug.Log($"Level : {playerData.level}, HP : {playerData.maxHp}");

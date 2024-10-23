@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ObjectManager //Spawn�� DeSpawn�� �������ִ� �Ŵ���
 {
@@ -20,7 +21,7 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
         {
             // TODO : Data
             GameObject go = Managers.Resource.Instantiate("James.prefab", pooling: true); //���ӿ�����Ʈ�� ���ӽ������� �־��ְ� Ǯ���� ���� �����ΰ� üũ //Ű���� �����Ͽ� ��巹������� ������Ʈ�� ���ؿ�
-            go.name = "Player"; 
+            go.name = "Player";
             go.transform.position = position;
 
             PlayerController pc = go.GetOrAddComponent<PlayerController>(); //������ �÷��̾�� ������Ʈ ������ Get�ϴ�����???
@@ -44,7 +45,6 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
 
             return mc as T;
         }
-
         else if (type == typeof(GemController))
         {
             GameObject go = Managers.Resource.Instantiate(Define.EXP_GEM_PREFAB, pooling: true);
@@ -62,7 +62,18 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
             //TEMP
             GameObject.Find("@Grid").GetComponent<GridController>().Add(go);
 
-            return gc as T; 
+            return gc as T;
+        }
+        else if (type == typeof(ProjectileController))
+        {
+            GameObject go = Managers.Resource.Instantiate("Bullet.prefab", pooling: true);
+            go.transform.position = position;
+
+            ProjectileController pc = go.GetOrAddComponent<ProjectileController>();
+            Projectiles.Add(pc);
+            pc.Init();
+
+            return pc as T; 
         }
         #endregion
         return null;
@@ -70,6 +81,10 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
 
     public void Despawn<T>(T obj) where T : BaseController
     {
+        if (obj.IsValid()==false) //projectile쏘기파트
+        {
+            //int a = 3;
+        }
         System.Type type = typeof(T);
 
         if (type == typeof(PlayerController))
@@ -81,11 +96,7 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
             Monsters.Remove(obj as MonsterController);
             Managers.Resource.Destroy(obj.gameObject);
         }
-        else if (type == typeof(ProjectileController))
-        {
-            Projectiles.Remove(obj as ProjectileController);
-            Managers.Resource.Destroy(obj.gameObject);
-        }
+        
         else if (type == typeof(GemController))
         {
             Gems.Remove(obj as GemController);
@@ -93,6 +104,11 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
 
             //TEMP
             GameObject.Find("@Grid").GetComponent<GridController>().Remove(obj.gameObject);
+        }
+        else if (type == typeof(ProjectileController))
+        {
+            Projectiles.Remove(obj as ProjectileController);
+            Managers.Resource.Destroy(obj.gameObject);
         }
     }
 }

@@ -19,6 +19,7 @@ public static class Extension
 		return go != null && go.activeSelf;
 	}
 
+
 	public static bool IsValid(this BaseController bc)
 	{
 		return bc != null && bc.isActiveAndEnabled;

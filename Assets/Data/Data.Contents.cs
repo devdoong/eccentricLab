@@ -51,7 +51,6 @@ namespace Data
         [XmlElement("PlayerData")]//플레이어 데이터가 있다
         public List<PlayerData> stats = new List<PlayerData>(); //플레이어에 이러한 스택들을 내가 들고있을 예정이라고 선언
 
-
         public Dictionary<int, PlayerData> MakeDict()
         {
             Dictionary<int, PlayerData> dict = new Dictionary<int, PlayerData>();
@@ -94,19 +93,18 @@ namespace Data
 
         [XmlAttribute(AttributeName = "type")]
         //public string skillTypeStr;
-        public Define.SkillType skillTupe = Define.SkillType.None;
+        public Define.SkillType skillType = Define.SkillType.None;
 
-        [XmlAnyAttribute]
+        [XmlAttribute]
         public int nextID;
-        public int prevID = 0; //todo
+        public int prevID = 0; // TODO
 
         [XmlAttribute]
-        public string Prefab;
+        public string prefab;
 
-
-        //아주많이
+        // 아주 많이
         [XmlAttribute]
-        public int damage; 
+        public int damage;
     }
 
     [Serializable, XmlRoot("SkillDatas")]//플레이어 데이터스 안에
@@ -114,7 +112,6 @@ namespace Data
     {
         [XmlElement("SkillData")]//플레이어 데이터가 있다
         public List<SkillData> skills = new List<SkillData>(); //플레이어에 이러한 스택들을 내가 들고있을 예정이라고 선언
-
 
         public Dictionary<int, SkillData> MakeDict()
         {
@@ -124,10 +121,5 @@ namespace Data
             return dict;//딕셔너리 반환
         }
     }
-    #endregion
-
-
-
-
-
 }
+    #endregion
