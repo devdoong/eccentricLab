@@ -7,11 +7,11 @@ public class MonsterController : CreatureController
 {
     public override bool Init()
     {
-        if (base.Init()) // ?   ?             ? ?
+        if (base.Init())
             return false;
 
-        Object_Type = Define.ObjectType.Monster; //     ?        ?        ? 
-        return true;// ?  ?   ? 
+        Object_Type = Define.ObjectType.Monster; 
+        return true;
     }
 
     void FixedUpdate()
@@ -22,11 +22,11 @@ public class MonsterController : CreatureController
         if (pc == null)
             return;
 
-        Vector3 dir = pc.transform.position - transform.position; //?    ? -        ?  =                               
-        Vector3 newPos = transform.position + dir.normalized * Time.deltaTime * _speed; //       ? +            ? *  ð  *    ? 
+        Vector3 dir = pc.transform.position - transform.position;                           
+        Vector3 newPos = transform.position + dir.normalized * Time.deltaTime * _speed; 
         GetComponent<Rigidbody2D>().MovePosition(newPos);
 
-        GetComponent<SpriteRenderer>().flipX = dir.x < 0; //               .        ? 
+        GetComponent<SpriteRenderer>().flipX = dir.x < 0; 
         #endregion
     }
     #region override OnDead()
@@ -45,20 +45,19 @@ public class MonsterController : CreatureController
     #endregion
 
     #region       浹 ?       
-    private void OnCollisionEnter2D(Collision2D collision) //   ?   浹    ?  ?μ 
+    private void OnCollisionEnter2D(Collision2D collision) 
     {
-        PlayerController target = collision.gameObject.GetComponent<PlayerController>(); // ε           ÷  ?  ?   ?   PlayerController    ?  ?oμ 
-        if (target == null) return; // ??    ? 
+        PlayerController target = collision.gameObject.GetComponent<PlayerController>(); 
+        if (target.IsValid() == false) return;
+        if (this.IsValid() == false) return;
 
 
-        if (_coDotDamage != null) StopCoroutine(_coDotDamage); // ?            ? ?            ?          ι     ?            ?     
+        if (_coDotDamage != null) StopCoroutine(_coDotDamage);   
 
-        _coDotDamage = StartCoroutine(CostartDotDamage(target)); // ?  ?     ? ?    
-
-        //  ?        ð            ??     ?     
+        _coDotDamage = StartCoroutine(CostartDotDamage(target));    
     }
     #endregion
-    #region       浹?       
+    #region
     public void OnCollisionExit2D(Collision2D collision)
     {
         PlayerController target = collision.gameObject.GetComponent<PlayerController>();
@@ -71,7 +70,7 @@ public class MonsterController : CreatureController
         _coDotDamage = null;
     }
     #endregion
-    #region  ÷  ?   浹          ? ( ? ?)
+    #region
     Coroutine _coDotDamage;
     public IEnumerator CostartDotDamage(PlayerController target) 
     {

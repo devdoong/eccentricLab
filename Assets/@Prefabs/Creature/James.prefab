@@ -123,7 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  _fireSocket: {fileID: 2586865599425774908}
 --- !u!50 &5566440336085611790
 Rigidbody2D:
   serializedVersion: 4
@@ -198,7 +197,7 @@ GameObject:
   - component: {fileID: 5396557465126265829}
   m_Layer: 0
   m_Name: BasicGun
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

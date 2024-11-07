@@ -91,7 +91,7 @@ public class ObjectManager //Spawn�� DeSpawn�� �������ִ�
         {
             // ?
         }
-        else if (type == typeof(MonsterController)) //���Ͱ� �����Ÿ�
+        else if (type == typeof(MonsterController)) 
         {
             Monsters.Remove(obj as MonsterController);
             Managers.Resource.Destroy(obj.gameObject);

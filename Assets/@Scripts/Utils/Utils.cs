@@ -20,6 +20,17 @@ public class Utils
 
         return transform.gameObject;
     }
+    public static GameObject FindChildWithTag(Transform parent, string tag)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.CompareTag(tag))
+            {
+                return child.gameObject; // 태그를 가진 자식 오브젝트 반환
+            }
+        }
+        return null; // 태그를 가진 자식이 없을 경우 null 반환
+    }
 
     public static T FindChild<T>(GameObject go, string name = null, bool recursive = false) where T : UnityEngine.Object
     {
